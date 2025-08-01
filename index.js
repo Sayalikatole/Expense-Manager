@@ -1,11 +1,24 @@
-require("./config/backend/db"); // Ensure database connection is established
+require("./config/db"); // Ensure database connection is established
 
 const express = require('express');
 const app = express();
 const path = require('path');
 const port = 3000;
 const Expense = require('./models/Expense'); // Add this line
+const cors = require('cors');
 
+const corsOptions = {
+  origin: [
+    "https://task-management-frontend-flame.vercel.app",
+    "http://localhost:3000",
+    "http://localhost:4500",
+    "http://127.0.0.1:3000",
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 

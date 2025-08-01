@@ -3,9 +3,20 @@ const path = require('path');
 const cors = require('cors');
 require('./config/db');
 const Expense = require('./models/Expense');
+const corsOptions = {
+  origin: [
+    "https://task-management-frontend-flame.vercel.app",
+    "http://localhost:3000",
+    "http://localhost:4500",
+    "http://127.0.0.1:3000",
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
 
 const app = express();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
