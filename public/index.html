@@ -143,16 +143,16 @@
         total += exp.amount;
         const tr = document.createElement('tr');
         const emoji = categoryEmojis[exp.category] || '';
-        tr.innerHTML = `
-          <td class="px-4 py-2">${exp.desc}</td>
-          <td class="px-4 py-2">₹${exp.amount}</td>
-          <td class="px-4 py-2">${exp.date || ''}</td>
-          <td class="px-4 py-2">${emoji} ${exp.category ? exp.category.charAt(0).toUpperCase() + exp.category.slice(1) : ''}</td>
-          <td class="px-4 py-2">
-            <button onclick="openEditModal(${exp.id}, '${exp.desc.replace(/'/g, "&#39;")}', ${exp.amount}, '${exp.date || ''}', '${exp.category || ''}')" class="text-blue-500 hover:underline mr-2">Edit</button>
-            <button onclick="deleteExpense(${exp.id})" class="text-red-500 hover:underline">Delete</button>
-          </td>
-        `;
+     tr.innerHTML = `
+  <td class="px-4 py-2">${exp.desc}</td>
+  <td class="px-4 py-2">₹${exp.amount}</td>
+  <td class="px-4 py-2">${exp.date || ''}</td>
+  <td class="px-4 py-2">${emoji} ${exp.category ? exp.category.charAt(0).toUpperCase() + exp.category.slice(1) : ''}</td>
+  <td class="px-4 py-2">
+    <button onclick="openEditModal('${exp._id}', '${exp.desc.replace(/'/g, "&#39;")}', ${exp.amount}, '${exp.date || ''}', '${exp.category || ''}')" class="text-blue-500 hover:underline mr-2">Edit</button>
+    <button onclick="deleteExpense('${exp._id}')" class="text-red-500 hover:underline">Delete</button>
+  </td>
+`;
         expenseList.appendChild(tr);
       });
       totalAmount.textContent = `₹${total}`;
