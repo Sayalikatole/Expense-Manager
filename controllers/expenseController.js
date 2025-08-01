@@ -1,22 +1,11 @@
-require("./config/backend/db"); // Ensure database connection is established
+const Expense = require('../models/Expense');
 
-const express = require('express');
-const app = express();
-const path = require('path');
-const port = 3000;
-const Expense = require('./models/Expense'); // Add this line
-
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Get all expenses
-app.get('/api/expenses', async (req, res) => {
+exports.getAllExpenses = async (req, res) => {
   const expenses = await Expense.find();
   res.json(expenses);
-});
+};
 
-// Add a new expense
-app.post('/api/expenses', async (req, res) => {
+exports.addExpense = async (req, res) => {
   let { desc, amount, date, category } = req.body;
   if (!desc || typeof amount !== 'number') {
     return res.status(400).json({ error: 'Description and amount are required.' });
@@ -30,18 +19,16 @@ app.post('/api/expenses', async (req, res) => {
   const expense = new Expense({ desc, amount, date, category });
   await expense.save();
   res.status(201).json(expense);
-});
+};
 
-// Delete an expense
-app.delete('/api/expenses/:id', async (req, res) => {
+exports.deleteExpense = async (req, res) => {
   const { id } = req.params;
   const result = await Expense.findByIdAndDelete(id);
   if (!result) return res.status(404).json({ error: 'Expense not found.' });
   res.json({ success: true });
-});
+};
 
-// Edit an expense
-app.put('/api/expenses/:id', async (req, res) => {
+exports.editExpense = async (req, res) => {
   const { id } = req.params;
   const { desc, amount, date, category } = req.body;
   const expense = await Expense.findById(id);
@@ -52,12 +39,4 @@ app.put('/api/expenses/:id', async (req, res) => {
   if (category && typeof category === 'string') expense.category = category;
   await expense.save();
   res.json(expense);
-});
-
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello from backend!' });
-});
-
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+};

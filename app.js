@@ -1,11 +1,11 @@
-require("./config/backend/db"); // Ensure database connection is established
-
 const express = require('express');
-const app = express();
 const path = require('path');
-const port = 3000;
-const Expense = require('./models/Expense'); // Add this line
+const cors = require('cors');
+require('./config/db');
+const Expense = require('./models/Expense');
 
+const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -58,6 +58,4 @@ app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello from backend!' });
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+module.exports = app;
