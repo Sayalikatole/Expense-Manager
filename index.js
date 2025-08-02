@@ -11,7 +11,7 @@ const corsOptions = {
   origin: [
     "https://task-management-frontend-flame.vercel.app",
     "http://localhost:3000",
-    "http://localhost:4200",
+    "http://localhost:4500",
     "http://127.0.0.1:3000",
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
